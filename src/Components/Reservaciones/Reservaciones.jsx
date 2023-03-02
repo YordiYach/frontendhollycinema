@@ -21,7 +21,7 @@ const Reservaciones = () => {
 
     useEffect(() => {
         if (token) {
-            axios.get(`https://backendcinema.onrender.com/user`, {
+            axios.get(`https://backhollycinema.onrender.com/user`, {
                 headers: {
                     token: token
                 }
@@ -37,7 +37,7 @@ const Reservaciones = () => {
 
     useEffect(() => {
         const fetchfacturas = async () => {
-            const response = await axios.get('https://backendcinema.onrender.com/getfacturas', config);
+            const response = await axios.get('https://backhollycinema.onrender.com/getfacturas', config);
             setFacturas(response.data);
         };
         fetchfacturas();
