@@ -50,7 +50,7 @@ const Login = () => {
                 }
                 setLoading(true);
                 await axios
-                    .post("https://backendcinema.onrender.com/login", Usuario)
+                    .post("https://backhollycinema.onrender.com/login", Usuario)
                     .then(({ data }) => {
                         setMensaje(data.mensaje);
                         setInputs({ correo: "", contraseña: "" })
