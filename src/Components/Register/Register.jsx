@@ -61,7 +61,7 @@ const Register = () => {
             }
             setLoading(true);
             await axios
-                .post("https://backendcinema.onrender.com/register", Usuario)
+                .post("https://backhollycinema.onrender.com/register", Usuario)
                 .then(({ data }) => {
                     setMensaje(data.mensaje);
                     setInputs({
