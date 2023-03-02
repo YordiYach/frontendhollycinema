@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import AddMovieForm from './AddMovie';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Admin = () => {
     //retornar peliculas
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/getmovies')
+        axios.get('https://backendcinema.onrender.com/getmovies')
             .then(response => {
                 setMovies(response.data);
                 console.log(response.data)
@@ -27,6 +29,22 @@ const Admin = () => {
         navigate("/login");
     };
 
+
+    const liberarAsientos = () => {
+        localStorage.removeItem('asientosBloqueados')
+        toast.warn('Asientos Liberados', {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
+
+
     const showMovieComponent = () => {
         setAddmovie(true);
     };
@@ -36,9 +54,19 @@ const Admin = () => {
     };
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:4000/deletemovies/${id}`)
+        axios.delete(`https://backendcinema.onrender.com/deletemovies/${id}`)
             .then(response => {
                 setMovies(movies.filter(movie => movie._id !== id)); // Actualiza el estado de las películas eliminando la película con el ID correspondiente
+                toast.error('Pelicula Eliminada', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -80,9 +108,11 @@ const Admin = () => {
                     <div class="flex-1 px-2 sm:px-0">
                         <div class="flex justify-between items-center">
                             <h3 class="text-3xl font-extralight text-white/50">AGREGAR PELICULAS</h3>
+                            <button class="text-white/50 p-4 inline-flex justify-center rounded-md hover:bg-gray-800 hover:text-white smooth-hover" onClick={liberarAsientos}>
+                                Liberar Asientos
+                            </button>
                         </div>
                         <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-
                             <button onClick={showMovieComponent}>
                                 <div class="group bg-gray-900/30 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/40 hover:smooth-hover">
                                     <p class="bg-gray-900/70 text-white/50 group-hover:text-white group-hover:smooth-hover flex w-20 h-20 rounded-full items-center justify-center" href="#">
@@ -90,11 +120,10 @@ const Admin = () => {
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                         </svg>
                                     </p>
-                                    <button onClick={showMovieComponent} class="text-white/50 group-hover:text-white group-hover:smooth-hover text-center">Añadir Pelicula</button>
+                                    <button class="text-white/50 group-hover:text-white group-hover:smooth-hover text-center">Añadir Pelicula</button>
                                 </div>
                             </button>
                             {addmovie && <AddMovieForm />}
-
 
                             {movies.map(movie => (
                                 <p key={movie._id}>
@@ -109,7 +138,6 @@ const Admin = () => {
                                     </div>
                                 </p>
                             ))}
-
                         </div>
                     </div>
                 </div>

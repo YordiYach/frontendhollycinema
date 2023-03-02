@@ -8,13 +8,13 @@ import Reservaciones from './Reservaciones/Reservaciones';
 import ErrorPage from './ErrorPage/ErrorPage';
 import { useState } from 'react';
 import Reserva from './Reserva/Reserva';
-import Butacas from './Butacas/Butacas';
 import Admin from './Admin/Admin';
 import Users from './Admin/Users';
 import Footer from './Footer/Footer';
 import axios from 'axios';
 import { useEffect } from 'react';
 import Header2 from './Header2/Header2';
+import Asientos from './Asientos/Asientos';
 
 const Main = () => {
   const [dato, setDato] = useState('');
@@ -25,7 +25,7 @@ const Main = () => {
 
   useEffect(() => {
     if (token) {
-      axios.get(`http://localhost:4000/user`, {
+      axios.get(`https://backendcinema.onrender.com/user`, {
         headers: {
           token: token
         }
@@ -39,10 +39,10 @@ const Main = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<>{ name ? <Header2 /> : <Header /> }<Peliculas setDato={setDato} setPrecio={setPrecio} /><Footer /> </>} />
+        <Route path="/" element={<>{name ? <Header2 /> : <Header />}<Peliculas setDato={setDato} setPrecio={setPrecio} /><Footer /> </>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/reserva" element={<> <Reserva dato={dato} precio={precio} /> <Butacas precio={precio} pel={dato} /> </>} />
+        <Route path="/reserva" element={<> <Reserva dato={dato} precio={precio} /> <Asientos precio={precio} pel={dato} /></>} />
         <Route path="/reservaciones" element={<> <Reservaciones /> <Footer /> </>} />
         <Route path="/*" element={<ErrorPage />} />
         <Route path='/admin/movies' element={<><Admin /></>} />

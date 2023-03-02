@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const Header = () => {
@@ -11,7 +10,7 @@ const Header = () => {
 
     useEffect(() => {
         if (token) {
-            axios.get(`http://localhost:4000/user`, {
+            axios.get(`https://backendcinema.onrender.com/user`, {
                 headers: {
                     token: token
                 }
@@ -22,7 +21,6 @@ const Header = () => {
 
     }, [token]);
 
-    const navigate = useNavigate()
     return (
         <>
 

@@ -9,7 +9,7 @@ const Peliculas = (props) => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/getmovies')
+        axios.get('https://backendcinema.onrender.com/getmovies')
             .then(response => {
                 setMovies(response.data);
                 console.log(response.data)
@@ -79,6 +79,19 @@ const Peliculas = (props) => {
                         </div>
                     </div>
                 ))}
+
+                <aside
+                    class="fixed bottom-4 right-4 z-50 flex items-center justify-center gap-4 rounded-lg bg-black px-5 py-3 text-white"
+                >
+                    <p
+                        target="_blank"
+                        rel="noreferrer"
+                        class="text-sm font-medium hover:opacity-75"
+                    >
+                        ¡Bienvenido de nuevo! 👋
+                    </p>
+                </aside>
+
             </div>
         </>
     )

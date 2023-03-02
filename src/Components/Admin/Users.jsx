@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const response = await axios.get('http://localhost:4000/users');
+            const response = await axios.get('https://backendcinema.onrender.com/users');
             setUsers(response.data);
         };
         fetchUsers();
-    }, []);
+    }, [users]);
 
     const showAdminComponent = () => {
         navigate("/admin/movies");
@@ -23,6 +25,41 @@ const Users = () => {
     };
 
     const navigate = useNavigate();
+
+    const aumentarCreditos = async (idUsuario, valor, nombre) => {
+        try {
+            const response = await axios.post('https://backendcinema.onrender.com/addcredits', {
+                id: idUsuario,
+                creditos: valor
+            });
+            toast.success(`Se ha agregado ${valor} creditos a ${nombre}`, {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            console.log(response.data);
+
+            // Actualizar el estado de los créditos del usuario en la tabla
+            const updatedUsers = users.map((user) => {
+                if (user.id === idUsuario) {
+                    return {
+                        ...user,
+                        credits: user.credits + valor
+                    };
+                } else {
+                    return user;
+                }
+            });
+            setUsers(updatedUsers);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <>
@@ -63,26 +100,26 @@ const Users = () => {
                             <table class="items-center bg-transparent w-full border-collapse ">
                                 <thead>
                                     <tr>
-                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                            Id
-                                        </th>
-                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                             Nombre
                                         </th>
-                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                             Apellido
                                         </th>
-                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                             Identificacion
                                         </th>
-                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                             Correo
                                         </th>
-                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                             Telefono
                                         </th>
-                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                             Credits
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Add Credits
                                         </th>
                                     </tr>
                                 </thead>
@@ -91,26 +128,30 @@ const Users = () => {
 
                                     {users.map((user) => (
                                         <tr key={user.identificacion}>
-                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                                {user._id}
-                                            </th>
-                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                 {user.nombre}
                                             </th>
-                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                 {user.apellido}
                                             </th>
-                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                 {user.identificacion}
                                             </th>
-                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                 {user.correo}
                                             </th>
-                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                 {user.telefono}
                                             </th>
-                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                                 {user.creditos}
+                                            </th>
+                                            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-2 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                                <div>
+                                                    <button onClick={() => aumentarCreditos(user._id, 50, user.nombre)} class="border-2 border-green-600 rounded-lg px-3 py-1 text-white cursor-pointer hover:bg-gray-500 hover:text-white">50</button>
+                                                    <button onClick={() => aumentarCreditos(user._id, 100)} class="border-2 border-green-600 rounded-lg px-3 py-1 text-white cursor-pointer hover:bg-gray-500 hover:text-white">100</button>
+                                                    <button onClick={() => aumentarCreditos(user._id, 200)} class="border-2 border-green-600 rounded-lg px-3 py-1 text-white cursor-pointer hover:bg-gray-500 hover:text-white">200</button>
+                                                </div>
                                             </th>
                                         </tr>
                                     ))}

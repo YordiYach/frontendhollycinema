@@ -11,15 +11,15 @@ const Footer = () => {
                     <p class=" md:w-2/3 text-gray-400">"Una experiencia inolvidable en cada película: ven a nuestro cine y sumérgete en una aventura visual que te transportará a mundos nunca antes imaginados, mientras disfrutas de la mejor calidad de imagen y sonido en una atmósfera acogedora y confortable. ¡Te esperamos para vivir juntos la magia del séptimo arte!"
                     </p>
                     <div class="w-44 pt-6 md:pt-0">
-                        <a class="bg-red-500 justify-center text-center rounded-lg shadow px-2 py-3 flex items-center">Contáctanos</a>
+                        <p class="bg-red-500 justify-center text-center rounded-lg shadow px-2 py-3 flex items-center">Contáctanos</p>
                     </div>
                 </div>
                 <div class="flex flex-col">
                     <div class="flex mt-24 mb-12 flex-row justify-between">
-                        <a class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">About</a>
-                        <a class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">Services</a>
-                        <a class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">Why us</a>
-                        <a class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">Contact</a>
+                        <p class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">About</p>
+                        <p class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">Services</p>
+                        <p class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">Why us</p>
+                        <p class="hidden md:block cursor-pointer text-gray-600 hover:text-white uppercase">Contact</p>
                         <div class="flex flex-row space-x-8 items-center justify-between">
                             <p>
                                 <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">

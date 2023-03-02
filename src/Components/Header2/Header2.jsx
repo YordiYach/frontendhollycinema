@@ -17,7 +17,7 @@ const Header2 = () => {
 
     useEffect(() => {
         if (token) {
-            axios.get(`http://localhost:4000/user`, {
+            axios.get(`https://backendcinema.onrender.com/user`, {
                 headers: {
                     token: token
                 }

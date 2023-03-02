@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const AddMovieForm = () => {
     const [inputs, setInputs] = useState({ nombre: "", url: "", costo: " " })
@@ -25,7 +26,7 @@ const AddMovieForm = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (nombre === "" && url === "" && costo === "") {
-            alert("Llene los campos")
+            swal("Alerta", `Llene todos los campos`, "warning");
         }
 
         if (nombre !== "" && url !== "" && costo !== "") {
@@ -36,7 +37,7 @@ const AddMovieForm = () => {
             }
             setLoading(true);
             await axios
-                .post("http://localhost:4000/addmovie", Movie)
+                .post("https://backendcinema.onrender.com/addmovie", Movie)
                 .then(({ data }) => {
                     setMensaje(data.mensaje);
                     setInputs({ nombre: "", url: "", costo: "" })

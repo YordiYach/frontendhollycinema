@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Register = () => {
@@ -36,7 +38,16 @@ const Register = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (nombre === "" && apellido === "" && telefono === "" && identificacion === "" && correo === "" && contraseña === "") {
-            alert("Llene los campos")
+            toast.warn('Llene los campos', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
 
         if (nombre !== "" && apellido !== "" && telefono !== "" && identificacion !== "" && correo !== "" && contraseña !== "") {
@@ -50,7 +61,7 @@ const Register = () => {
             }
             setLoading(true);
             await axios
-                .post("http://localhost:4000/register", Usuario)
+                .post("https://backendcinema.onrender.com/register", Usuario)
                 .then(({ data }) => {
                     setMensaje(data.mensaje);
                     setInputs({
