@@ -112,7 +112,7 @@ function Asientos({ precio, pel }) {
         try {
             if (token) {
                 const response = await axios
-                    .post("https://backendcinema.onrender.com/factura", datos, config)
+                    .post("https://backhollycinema.onrender.com/factura", datos, config)
                     .then(({ data }) => {
                         setMensaje(data.mensaje);
                         bloquearAsientosSeleccionados();
