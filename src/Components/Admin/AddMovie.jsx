@@ -37,7 +37,7 @@ const AddMovieForm = () => {
             }
             setLoading(true);
             await axios
-                .post("https://backendcinema.onrender.com/addmovie", Movie)
+                .post("https://backhollycinema.onrender.com/addmovie", Movie)
                 .then(({ data }) => {
                     setMensaje(data.mensaje);
                     setInputs({ nombre: "", url: "", costo: "" })
