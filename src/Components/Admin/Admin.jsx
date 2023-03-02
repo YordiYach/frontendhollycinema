@@ -11,7 +11,7 @@ const Admin = () => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        axios.get('https://backendcinema.onrender.com/getmovies')
+        axios.get('https://backhollycinema.onrender.com/getmovies')
             .then(response => {
                 setMovies(response.data);
                 console.log(response.data)
