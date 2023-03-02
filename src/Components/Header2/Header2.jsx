@@ -17,7 +17,7 @@ const Header2 = () => {
 
     useEffect(() => {
         if (token) {
-            axios.get(`https://backendcinema.onrender.com/user`, {
+            axios.get(`https://backhollycinema.onrender.com/user`, {
                 headers: {
                     token: token
                 }
