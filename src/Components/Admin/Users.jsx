@@ -9,7 +9,7 @@ const Users = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const response = await axios.get('https://backendcinema.onrender.com/users');
+            const response = await axios.get('https://backhollycinema.onrender.com/users');
             setUsers(response.data);
         };
         fetchUsers();
@@ -28,7 +28,7 @@ const Users = () => {
 
     const aumentarCreditos = async (idUsuario, valor, nombre) => {
         try {
-            const response = await axios.post('https://backendcinema.onrender.com/addcredits', {
+            const response = await axios.post('https://backhollycinema.onrender.com/addcredits', {
                 id: idUsuario,
                 creditos: valor
             });
